@@ -14,15 +14,17 @@
     "test": "mocha"
   },
   "keywords": [
-      "suitcase",
-      "travelling",
-      "pack",
-      "travels",
-      "bag"
+    "suitcase",
+    "travelling",
+    "pack",
+    "travels",
+    "bag"
   ],
   "dependencies": {
     "bluebird": "~2.10.0",
+    "body-parser": "^1.14.1",
     "chalk": "~1.1.1",
+    "express": "^4.13.3",
     "underscore.string": "~3.2.2",
     "yeoman-generator": "~0.20.3",
     "yo": "~1.4.8"
