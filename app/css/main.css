@@ -1,9 +1,16 @@
+header {
+    padding-bottom: 20px;
+    padding-top: 110px;
+}
 header>.container {
     background-image: url("../img/ny-3.jpg");
-    background-size: 100% 650px;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    min-height: 645px;
-    padding-top: 150px;
+    border-radius: 1em;
+    min-height: 700px;
+    margin-top: 70px;
+    padding-top: 20px;
+    padding-bottom: 0px;
 }
 .parent-content {
     padding-right: 30px;

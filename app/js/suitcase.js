@@ -18,6 +18,12 @@ var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelServ
                 templateUrl:'templates/chooseOptions.html',
                 controller: 'chooseOptionsController'
             })
+            .state('/makeSuitcase',
+            {
+                url: "/makeSuitcase",
+                templateUrl:'templates/makeSuitcase.html',
+                controller: 'makeSuitcaseController'
+            })
             .state('adminarea',
             {
                 url: "/adminarea",

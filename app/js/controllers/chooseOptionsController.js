@@ -5,6 +5,7 @@
 
 suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log, currentTravelService){
     $log.info('starting chooseOptionsController');
+    var PATHS = {makeSuitcase : '/makeSuitcase'};
     $scope.travel = {}
     $scope.today = undefined;
     $scope.checkForm = function(form){
@@ -21,6 +22,7 @@ suitcaseApp.controller('chooseOptionsController',function chooseOptionsControlle
             $log.info("valid form");
             currentTravelService.setTravelOptions($scope.travel);
             currentTravelService.getTravelOptions();
+            $location.path(PATHS.makeSuitcase)
         }
     }
     $(function () {

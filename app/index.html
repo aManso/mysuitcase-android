@@ -75,11 +75,11 @@
                         <li class="page-scroll">
                             <a href="#about">Sobre nosotros</a>
                         </li>
-                        <li class="page-scroll" id="logInButton" ng-if="!isLogIn()">
-                            <a href="#logIn" ng-click="logIn()">Log In</a>
-                        </li>
                         <li class="page-scroll" id="registrationButton" ng-if="!isLogIn()">
                             <a href="#registration" ng-click="logIn()">Registrarme</a>
+                        </li>
+                        <li class="page-scroll" id="logInButton" ng-if="!isLogIn()">
+                            <a href="#logIn" ng-click="logIn()">Log In</a>
                         </li>
                         <li class="page-scroll" id="logOutButton" ng-if="isLogIn()">
                             <a href="#logOut" ng-click="logOut()">Log Out</a>
@@ -606,6 +606,7 @@
         <script src="js/controllers/chooseOptionsController.js"></script>
         <script src="js/controllers/adminAreaController.js"></script>
         <script src="js/controllers/travelsController.js"></script>
+        <script src="js/controllers/makeSuitcaseController.js"></script>
 
         <!--services-->
         <script src="js/services/currentTravelService.js"></script>
