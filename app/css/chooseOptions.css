@@ -45,11 +45,16 @@
 }
 
 .chooseOptionsContainer #chooseOptionsForm .error-message {
-    position: absolute;
-    color: red;
     background: white;
-    padding: 5px;
-    width: 100%;
     bottom: 0px;
+    color: red;
+    left: 0px;
+    padding: 5px;
+    position: absolute;
+    width: 100%;
     z-index: 2;
+}
+
+.chooseOptionsContainer .bootstrap-datetimepicker-widget {
+    color: #333;
 }

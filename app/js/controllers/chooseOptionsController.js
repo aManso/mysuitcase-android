@@ -6,20 +6,18 @@
 suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log){
     $log.info('starting chooseOptionsController');
     $scope.travel = {}
+    $scope.today = undefined;
     $scope.checkForm = function(form){
-        return form.$valid && !(($scope.travel.numDays!=undefined && $scope.travel.date==undefined) || ($scope.travel.numDays!=undefined && $scope.numDays.isNaN()))
+        return form.$valid && (($scope.travel.date==undefined && $scope.travel.numDays==undefined) || $scope.isValidDate() || $scope.isValidNumDays())
     }
     $scope.isValidDate = function() {
-        return $('.datetimepicker')[0].value==="13/11/2015"
-    }
-    $scope.isDefinedDate = function(){
-        return $('.datetimepicker')[0].value!=undefined && $('.datetimepicker')[0].value!="";
+        return $scope.travel.date instanceof Date
     }
     $scope.isValidNumDays = function() {
-        return ($scope.travel.numDays!=undefined && !isNaN($scope.travel.numDays)) && (($scope.isValidDate() && $scope.isDefinedDate()) || !$scope.isDefinedDate())
+        return $scope.travel.numDays!=undefined && !isNaN($scope.travel.numDays) && $scope.isValidDate()
     }
     $scope.setOptions = function(form){
-        if(checkForm(form)){
+        if($scope.checkForm(form)){
 
         }
     }
@@ -29,5 +27,13 @@ suitcaseApp.controller('chooseOptionsController',function chooseOptionsControlle
             viewMode: 'years',
             format: 'DD/MM/YYYY'
         });
+    });
+    $(".datetimepicker").focusout(function(){
+        var inputDate = $('.datetimepicker')[0].value;
+        if (inputDate){
+            $scope.travel.date = new Date($('.datetimepicker')[0].value)
+            $scope.$apply();
+        }
+
     });
 });
