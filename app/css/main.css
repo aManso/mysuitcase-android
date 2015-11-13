@@ -1,0 +1,11 @@
+header>.container {
+    background-image: url("../img/ny-3.jpg");
+    background-size: 100% 650px;
+    background-repeat: no-repeat;
+    min-height: 645px;
+    padding-top: 150px;
+}
+.parent-content {
+    padding-right: 30px;
+    padding-left: 30px;
+}

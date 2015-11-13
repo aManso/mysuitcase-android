@@ -1,0 +1,39 @@
+{
+  "name": "mysuitcase",
+  "version": "0.4.1",
+  "description": "To make lists of things to pack in your travels",
+  "main": "app/index.html",
+  "repository": "meanjs/generator-meanjs",
+  "author": {
+    "name": "Alex"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+      "suitcase",
+      "travelling",
+      "pack",
+      "travels",
+      "bag"
+  ],
+  "dependencies": {
+    "bluebird": "~2.10.0",
+    "chalk": "~1.1.1",
+    "underscore.string": "~3.2.2",
+    "yeoman-generator": "~0.20.3",
+    "yo": "~1.4.8"
+  },
+  "devDependencies": {
+    "mocha": "~2.3.2",
+    "temp": "~0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}

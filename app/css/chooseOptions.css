@@ -1,0 +1,55 @@
+.chooseOptionsContainer .header{
+    background: white;
+    border-radius: 1em;
+    color: #2c3e50;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.chooseOptionsContainer .chooseOptionsParent {
+    background: white;
+    border-radius: 1em;
+
+}
+
+/*.chooseOptionsContainer input.ng-invalid.ng-touched, .chooseOptionsContainer input.ng-invalid.form-touched {*/
+    /*background-color: #FA787E;*/
+/*}*/
+
+/*.chooseOptionsContainer input.ng-valid.ng-touched {*/
+    /*background-color: #78FA89;*/
+/*}*/
+.chooseOptionsContainer #chooseOptionsForm .row.control-group{
+    position: relative;
+}
+
+.chooseOptionsContainer #chooseOptionsForm .row.control-group input {
+    line-height: 1;
+}
+
+.chooseOptionsContainer #chooseOptionsForm .iconForm {
+    font-size: 30px;
+    position: absolute;
+    right: 65px;
+    top: 30px;
+    z-index: 3;
+}
+
+.chooseOptionsContainer #chooseOptionsForm .fa-close {
+    color: #FA787E;
+}
+
+.chooseOptionsContainer #chooseOptionsForm .fa-check {
+    color: #78FA89;
+}
+
+.chooseOptionsContainer #chooseOptionsForm .error-message {
+    position: absolute;
+    color: red;
+    background: white;
+    padding: 5px;
+    width: 100%;
+    bottom: 0px;
+    z-index: 2;
+}

@@ -1,0 +1,29 @@
+/*.logo img, .logo a {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*.logo img {*/
+    /*margin-right: 15px;*/
+/*}*/
+.logo a {
+    float: left;
+    margin-left: 0;
+    padding-top: 12px;
+}
+.logo .main-icon {
+    color: white;
+    float: left;
+    margin-right: 10px;
+}
+
+.logo a:active,
+.logo a:focus,
+.logo a.focus,
+.logo a.active{
+    color: #ffffff!important;
+}
+
+.logo a:hover .main-icon{
+    outline: 0;
+    color: #18bc9c;
+}
