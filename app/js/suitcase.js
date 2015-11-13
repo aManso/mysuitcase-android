@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var suitcaseApp = angular.module('suitcaseApp', ['ui.router'])
+var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelService'])
     .config(function($stateProvider, $urlRouterProvider){
         //other possible values to redirect
         $urlRouterProvider.when('/admin','/adminarea');

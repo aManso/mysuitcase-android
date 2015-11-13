@@ -3,7 +3,7 @@
  */
 'use strict';
 
-suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log){
+suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log, currentTravelService){
     $log.info('starting chooseOptionsController');
     $scope.travel = {}
     $scope.today = undefined;
@@ -18,7 +18,9 @@ suitcaseApp.controller('chooseOptionsController',function chooseOptionsControlle
     }
     $scope.setOptions = function(form){
         if($scope.checkForm(form)){
-
+            $log.info("valid form");
+            currentTravelService.setTravelOptions($scope.travel);
+            currentTravelService.getTravelOptions();
         }
     }
     $(function () {
