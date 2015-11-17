@@ -2,6 +2,7 @@ header {
     padding-bottom: 20px;
     padding-top: 110px;
 }
+
 header>.container {
     background-image: url("../img/ny-3.jpg");
     background-size: 100% 100%;
@@ -12,6 +13,7 @@ header>.container {
     padding-top: 20px;
     padding-bottom: 0px;
 }
+
 .parent-content {
     padding-right: 30px;
     padding-left: 30px;
