@@ -3,22 +3,23 @@
  */
 'use strict';
 
-var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelService'])
+var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelService', 'ngCookies'])
     .config(function($stateProvider, $urlRouterProvider){
         //other possible values to redirect
         $urlRouterProvider.when('/admin','/adminarea');
         $urlRouterProvider.when('/init','/chooseOptions');
+        $urlRouterProvider.when('/makesuitcase','/makeSuitcase');
         //default case
         $urlRouterProvider.otherwise("/chooseOptions");
         //states
         $stateProvider
-            .state('/chooseOptions',
+            .state('chooseOptions',
             {
                 url: "/chooseOptions",
                 templateUrl:'templates/chooseOptions.html',
                 controller: 'chooseOptionsController'
             })
-            .state('/makeSuitcase',
+            .state('makeSuitcase',
             {
                 url: "/makeSuitcase",
                 templateUrl:'templates/makeSuitcase.html',

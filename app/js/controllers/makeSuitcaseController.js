@@ -2,7 +2,15 @@
  * Created by alejandromansogonzalez on 13/11/15.
  */
 
-suitcaseApp.controller('travelsController',function travelsController($scope, $log, currentTravelService){
-    $log.info('starting travelsController');
-    $scope.var = 'travelsController';
+suitcaseApp.controller('makeSuitcaseController',function travelsController($scope, $log, $location, currentTravelService, cookieService){
+    $log.info('starting makeSuitcaseController');
+    var travelOptions = currentTravelService.getTravelOptions();
+    var travelOptionsCookies = cookieService.getCookie('travelOptions');
+
+    if(!travelOptions && travelOptionsCookies){
+        travelOptions = travelOptionsCookies;
+    }
+    if(!travelOptions){
+        $location.path('chooseOptions')
+    }
 });

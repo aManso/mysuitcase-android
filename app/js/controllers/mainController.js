@@ -3,18 +3,17 @@
  */
 'use strict';
 
-suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log){
+suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, cookieService){
     $log.info('starting mainCtrl');
-    var logged = false;
 
     $scope.isLogIn = function(){
-        logged;
+        return cookieService.getCookie('user') != undefined ;
     }
     $scope.logOut = function(){
-        logged = false;
+        cookieService.setCookie('user',{'login': false});
     }
     $scope.logIn = function(){
-        logged = true;
+        cookieService.setCookie('user',{'login': true});
     }
     $scope.goBackHome = function(){
         $location.path("/chooseOptions");
