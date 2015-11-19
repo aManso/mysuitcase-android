@@ -5,6 +5,7 @@
 
 suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, cookieService){
     $log.info('starting mainCtrl');
+    var socket = io.connect("http://localhost:8000");
     var user = cookieService.getCookie('user');
 
     $scope.isLogIn = function(){
@@ -21,6 +22,7 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, co
         goToTop();
     }
     $scope.logIn = function(logginForm){
+        socket.emit('checkuser',logginForm.username.$viewValue);
         user = {
             name : logginForm.username.$viewValue,
             id : '0001'

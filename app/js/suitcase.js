@@ -31,10 +31,4 @@ var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelServ
                 templateUrl:'templates/adminArea.html',
                 controller: 'adminAreaController'
             })
-//            .state('travels',
-//            {
-//                url: "/travels",
-//                templateUrl:'templates/travels.html',
-//                controller: 'travelsController'
-//            })
     });
