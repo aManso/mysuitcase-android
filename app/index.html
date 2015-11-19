@@ -54,7 +54,7 @@
                     </button>
                     <div class="logo">
                         <!--<img class="img-responsive" src="img/free-60-icons-06.png" alt="">-->
-                        <a class="navbar-brand" href="#page-top" ng-click="goBackHome()">
+                        <a class="navbar-brand" href="#page-top">
                             <span class="fa fa-5px fa-suitcase main-icon"> </span>
                             My Suitcase</a>
                     </div>
@@ -67,7 +67,7 @@
                             <a href="#page-top"></a>
                         </li>
                         <li class="page-scroll"  ng-if="isLogIn()">
-                            <a href="#travels" ng-click="seeMyTravels()">Viajes</a>
+                            <a href="#travels" ng-click="seeMyTravels()">Mis Viajes</a>
                         </li>
                         <li class="page-scroll" ng-if="currentSection!=undefined">
                             <a href="#page-top">{{topButton}}</a>
@@ -79,10 +79,13 @@
                             <a href="#registration" ng-click="logIn()">Registrarme</a>
                         </li>
                         <li class="page-scroll" id="logInButton" ng-if="!isLogIn()">
-                            <a href="#logIn" ng-click="logIn()">Log In</a>
+                            <a href="#logIn">Log In</a>
                         </li>
                         <li class="page-scroll" id="logOutButton" ng-if="isLogIn()">
-                            <a href="#logOut" ng-click="logOut()">Log Out</a>
+                            <a href="#page-top" ng-click="logOut()">Log Out</a>
+                        </li>
+                        <li ng-if="isLogIn()">
+                            <a href="#" active>{{username}}</a>
                         </li>
                     </ul>
                 </div>
@@ -98,7 +101,7 @@
             </div>
         </header>
 
-        <!-- Portfolio Grid Section -->
+        <!-- My travels Grid Section -->
         <section id="travels" ng-if="isLogIn()">
             <div class="container">
                 <div class="row">
@@ -251,6 +254,7 @@
                 </div>
             </div>
         </section>
+
         <!--log in section-->
         <section id="logIn"  ng-if="!isLogIn()">
             <div class="container">
@@ -268,14 +272,14 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Nombre de usuario</label>
-                                    <input type="text" class="form-control" placeholder="Nombre usuario" id="name" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Nombre usuario" name="username" ng-model="username" required data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Contraseña</label>
-                                    <input type="password" class="form-control" placeholder="Contraseña" id="password" required data-validation-required-message="Please enter your phone number.">
+                                    <input type="password" class="form-control" placeholder="Contraseña" name="userPassword" ng-model="userPassword"  required data-validation-required-message="Please enter your phone number.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
@@ -283,7 +287,7 @@
                             <div id="success"></div>
                             <div class="row">
                                 <div class="form-group col-xs-12">
-                                    <button type="submit" class="btn btn-success btn-lg">Acceder</button>
+                                    <button type="submit" ng-click="logIn(logginForm)" class="btn btn-success btn-lg">Acceder</button>
                                 </div>
                             </div>
                         </form>

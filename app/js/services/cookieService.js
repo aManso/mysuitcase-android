@@ -13,4 +13,8 @@ suitcaseApp.service('cookieService', function($cookieStore){
        return $cookieStore.get(id);
     };
 
+    this.removeCookie = function(id) {
+       return $cookieStore.remove(id);
+    };
+
 });
