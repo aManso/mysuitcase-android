@@ -23,7 +23,6 @@ var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     console.log("connection done");
-    console.log(socket);
     socket.on('checkuser', function(data) {
         console.log('checkuser: ' + data);
     });
