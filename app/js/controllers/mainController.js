@@ -22,15 +22,20 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, co
         goToTop();
     }
     $scope.logIn = function(logginForm){
-        socket.emit('checkuser',logginForm.username.$viewValue);
-        user = {
-            name : logginForm.username.$viewValue,
-            id : '0001'
+        socket.emit('checkuser',{name:logginForm.username.$viewValue,pass:logginForm.userPassword.$viewValue});
+        socket.on('userLogged', function(userDB) {
+            if(userDB!=undefined){
+                $log.info('Bienvenido '+userDB.name);
+                user = userDB;
+                $scope.username = userDB.name;
+                cleanLogInFields();
+                cookieService.setCookie('user',{'login': true, id:userDB.id, name:userDB.name});
+                goToTop();
+            }else{
+                console.log('El usuario no existe '+userDB);
+                alert('El usuario no existe '+userDB);
             }
-        $scope.username = user.name;
-        cleanLogInFields();
-        cookieService.setCookie('user',{'login': true, id:user.id, name:user.name});
-        goToTop();
+        });
     }
     $scope.goAdminArea = function(){
         $location.path("/adminarea");

@@ -26,6 +26,11 @@ io.on('connection', function (socket) {
     console.log("connection done");
     socket.on('checkuser', function(data) {
         console.log('checkuser: ' + data);
+        mongoose.model('users').find({name:data.name, password:data.pass},function(err, user){
+            console.log(user);
+            if(err) throw err;
+            socket.emit('userLogged', user[0]);
+        });
     });
 });
 var db = mongoose.connection;
@@ -34,12 +39,7 @@ db.once('open', function() {
     console.log('connected with ddbb');
 });
 mongoose.connect('mongodb://alex:Mdeveloper-3@ds051833.mongolab.com:51833/mysuitcase');
-var Schema = mongoose.Schema
-var User = new Schema({
-    name   : { type: String, required: true },
-    password     : { type: String, required:true }
-});
-var Users = mongoose.model('users');
+mongoose.model('users',{asda:String});
 
 server.listen(8000);
 console.log('Listening on port ' + 8000 + '...');
