@@ -4,6 +4,7 @@ var events = require('./eventsController');
 var http = require('http');
 var fs = require('fs');
 var app = express();
+var mongoose = require('mongoose');
 var rootPath = path.normalize(__dirname + '/../');
 var bodyParser = require('body-parser');
 
@@ -27,5 +28,18 @@ io.on('connection', function (socket) {
         console.log('checkuser: ' + data);
     });
 });
+var db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', function() {
+    console.log('connected with ddbb');
+});
+mongoose.connect('mongodb://alex:Mdeveloper-3@ds051833.mongolab.com:51833/mysuitcase');
+var Schema = mongoose.Schema
+var User = new Schema({
+    name   : { type: String, required: true },
+    password     : { type: String, required:true }
+});
+var Users = mongoose.model('users');
+
 server.listen(8000);
 console.log('Listening on port ' + 8000 + '...');
