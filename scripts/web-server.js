@@ -32,6 +32,14 @@ io.on('connection', function (socket) {
             socket.emit('userLogged', user[0]);
         });
     });
+    socket.on('checkEmail', function(data) {
+        console.log('checkEmail: ' + data);
+        mongoose.model('users').find({email:data.email},function(err, user){
+            console.log(user);
+            if(err) throw err;
+            socket.emit('userEmail', user[0]);
+        });
+    });
 });
 var db = mongoose.connection;
 db.on('error', console.error);

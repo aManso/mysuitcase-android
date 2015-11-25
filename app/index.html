@@ -213,43 +213,62 @@
                     <div class="col-lg-8 col-lg-offset-2">
                         <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                         <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                        <form name="registrationForm" id="registrationForm" novalidate>
+                        <ng-form name="registrationForm" id="registrationForm" novalidate>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Nombre de usuario</label>
-                                    <input type="text" class="form-control" placeholder="Nombre de usuario" id="name" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Nombre de usuario" ng-model="register.username" name="registerUserName" required data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
+                                    <div ng-show="registrationForm.registerUserName.$touched">
+                                        <span class="fa fa-5px fa-check iconForm" ng-show="registrationForm.registerUserName.$valid"> </span>
+                                        <span class="fa fa-5px fa-close iconForm" ng-show="registrationForm.registerUserName.$invalid"> </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" placeholder="Email" id="email" required data-validation-required-message="Please enter your email address.">
+                                    <input type="email" class="form-control" placeholder="Email" ng-model="register.email" name="userEmail" required data-validation-required-message="Please enter your email address.">
                                     <p class="help-block text-danger"></p>
+                                    <div ng-show="registrationForm.userEmail.$touched">
+                                        <span class="fa fa-5px fa-check iconForm" ng-show="registrationForm.userEmail.$valid"> </span>
+                                        <span class="fa fa-5px fa-close iconForm" ng-show="registrationForm.userEmail.$invalid"> </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Contraseña</label>
-                                    <input type="password" class="form-control" placeholder="Contraseña" id="password" required data-validation-required-message="Please enter your phone number.">
+                                    <input type="password" class="form-control" placeholder="Contraseña" ng-model="register.password" name="userPassword" required data-validation-required-message="Please enter your phone number.">
                                     <p class="help-block text-danger"></p>
+                                    <div ng-show="registrationForm.userPassword.$touched">
+                                        <span class="fa fa-5px fa-check iconForm" ng-show="isValidPass(register.password)"> </span>
+                                        <span class="fa fa-5px fa-close iconForm" ng-show="!isValidPass(register.password)"> </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Repite la contraseña</label>
-                                    <textarea rows="5" class="form-control" placeholder="Repite la contraseña" id="passwordVerification" required data-validation-required-message="Please enter a message."></textarea>
+                                    <input type="password" class="form-control" placeholder="Repite la contraseña" ng-model="register.repeatPassword" name="repeatUserPassword" required data-validation-required-message="Please enter your phone number.">
                                     <p class="help-block text-danger"></p>
+                                    <div ng-show="registrationForm.repeatUserPassword.$touched">
+                                        <span class="fa fa-5px fa-check iconForm" ng-show="register.password === register.repeatPassword"> </span>
+                                        <span class="fa fa-5px fa-close iconForm" ng-show="register.password != register.repeatPassword"> </span>
+                                    </div>
                                 </div>
+                            </div>
+                            <div ng-show="">
+                                <span ng-show="" class="error-message">El usuario o la contraseña son erroneas</span>
                             </div>
                             <br>
                             <div id="success"></div>
                             <div class="row">
                                 <div class="form-group col-xs-12">
-                                    <button type="submit" class="btn btn-success btn-lg">Registrar</button>
+                                    <button type="submit" ng-click="register(registrationForm)" class="btn btn-success btn-lg">Registrar</button>
                                 </div>
                             </div>
-                        </form>
+                        </ng-form>
                     </div>
                 </div>
             </div>
@@ -268,26 +287,37 @@
                     <div class="col-lg-8 col-lg-offset-2">
                         <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                         <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                        <form name="logginForm" id="logginForm" novalidate>
+                        <form name="loginForm" id="loginForm" novalidate>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Nombre de usuario</label>
-                                    <input type="text" class="form-control" placeholder="Nombre usuario" name="username" ng-model="username" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Nombre usuario" name="username" ng-model="username" ng-change="login.wrongUserPass=false" required data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Contraseña</label>
-                                    <input type="password" class="form-control" placeholder="Contraseña" name="userPassword" ng-model="userPassword"  required data-validation-required-message="Please enter your phone number.">
+                                    <input type="password" class="form-control" placeholder="Contraseña" name="userPassword" ng-model="userPassword"  ng-change="login.wrongUserPass=false" required data-validation-required-message="Please enter your phone number.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
+                            <br/>
+                            <div class="row control-group remindPass floating-label-form-group">
+                                <span class="form-group col-lg-6  col-sm-6 col-xs-12" ng-click="toggleRemind()">¿Te has olvidado de tu contraseña?</span><input ng-show="toggleRemindInput" ng-change="remindPassError=false" ng-model="remindPassEmail" class="form-group col-lg-6 col-sm-6 col-xs-12" type="email" placeholder="Introduce tu email"/>
+                            </div>
                             <br>
+                            <div ng-show="remindPassError || login.wrongUserPass || (loginForm.$invalid && (loginForm.userPassword.$touched || loginForm.username.$touched))">
+                                <span ng-show="login.wrongUserPass" class="error-message">El usuario o la contraseña son erroneas</span>
+                                <span ng-show="loginForm.$invalid && (loginForm.userPassword.$touched || loginForm.username.$touched)" class="error-message">Debes introducir usuario y contraseña</span>
+                                <span ng-show="remindPassError" class="error-message">El email que has introducido no está registrado</span>
+                            </div>
+                            <br/>
                             <div id="success"></div>
                             <div class="row">
                                 <div class="form-group col-xs-12">
-                                    <button type="submit" ng-click="logIn(logginForm)" class="btn btn-success btn-lg">Acceder</button>
+                                    <button type="submit" ng-show="!toggleRemindInput" ng-click="logIn(loginForm)" class="btn btn-success btn-lg">Acceder</button>
+                                    <button type="submit" ng-show="toggleRemindInput" ng-click="remindPass()" class="btn btn-success btn-lg">Recordar contraseña</button>
                                 </div>
                             </div>
                         </form>
@@ -623,6 +653,7 @@
         <script src="js/services/currentTravelService.js"></script>
         <script src="js/services/cacheService.js"></script>
         <script src="js/services/cookieService.js"></script>
+        <script src="js/services/commonFunctionsService.js"></script>
     </body>
 
 </html>

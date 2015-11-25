@@ -29,3 +29,38 @@ header>.container {
         padding-right: 0;
     }
 }
+
+/*login*/
+#loginForm .error-message {
+    background: white;
+    color: red;
+    padding: 5px;
+    width: 100%;
+    z-index: 2;
+}
+
+.remindPass {
+    height: 58px;
+}
+.remindPass span{
+    color:  #708ef9;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/*register*/
+#registrationForm .iconForm {
+    font-size: 30px;
+    position: absolute;
+    right: 65px;
+    top: 30px;
+    z-index: 3;
+}
+#registrationForm .fa-close {
+    color: #FA787E;
+}
+
+#registrationForm .fa-check {
+    color: #78FA89;
+}

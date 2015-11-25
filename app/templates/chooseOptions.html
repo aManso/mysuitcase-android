@@ -5,7 +5,7 @@
         <hr class="star-primary">
     </div>
     <div class="col-lg-8 col-lg-offset-2 chooseOptionsParent">
-        <form name="chooseOptionsForm" id="chooseOptionsForm" novalidate>
+        <ng-form name="chooseOptionsForm" id="chooseOptionsForm" novalidate>
             <div class="row control-group">
                 <div class="form-group col-xs-12 floating-label-form-group controls">
                     <label>Destino</label>
@@ -52,7 +52,7 @@
                     <button type="submit" ng-click="setOptions(chooseOptionsForm)" class="btn btn-success btn-lg" ng-disabled="!checkForm(chooseOptionsForm)">Hacer lista</button>
                 </div>
             </div>
-        </form>
+        </ng-form>
     </div>
 
 </div>
