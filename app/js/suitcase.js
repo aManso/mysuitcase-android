@@ -22,7 +22,7 @@ var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelServ
             .state('makeSuitcase',
             {
                 url: "/makeSuitcase",
-                templateUrl:'templates/makeSuitcase.html',
+                templateUrl:'../templates/makeSuitcase.jade',
                 controller: 'makeSuitcaseController'
             })
             .state('adminarea',

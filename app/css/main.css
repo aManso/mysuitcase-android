@@ -64,3 +64,18 @@ header>.container {
 #registrationForm .fa-check {
     color: #78FA89;
 }
+
+#registrationForm .row.control-group{
+    position: relative;
+}
+
+#registrationForm .error-message {
+    background: white;
+    bottom: 0px;
+    color: red;
+    left: 0px;
+    padding: 5px;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
