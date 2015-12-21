@@ -34,6 +34,7 @@
     "bootstrap": "~3.3.5",
     "angular": "~1.4.7",
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
-    "angular-cookies": "~1.4.7"
+    "angular-cookies": "~1.4.7",
+    "geocomplete": "~1.6.5"
   }
 }

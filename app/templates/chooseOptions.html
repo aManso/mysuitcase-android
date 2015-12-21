@@ -9,7 +9,7 @@
             <div class="row control-group">
                 <div class="form-group col-xs-12 floating-label-form-group controls">
                     <label>Destino</label>
-                    <input type="text" class="form-control" ng-class="{'form-touched':chooseOptionsForm.$submitted}" placeholder="Destino" name="destiny" ng-model="travel.destiny" required>
+                    <input type="text" id="destinyField" class="form-control" ng-change="clearDestiny()" ng-class="{'form-touched':chooseOptionsForm.$submitted}" placeholder="Destino" name="destiny" ng-model="travel.destiny" required>
                     <p class="help-block text-danger"></p>
                     <span class="fa fa-5px fa-check iconForm" ng-show="chooseOptionsForm.destiny.$touched && chooseOptionsForm.destiny.$valid"> </span>
                     <span class="fa fa-5px fa-close iconForm" ng-show="chooseOptionsForm.destiny.$touched && chooseOptionsForm.destiny.$invalid"> </span>

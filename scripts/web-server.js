@@ -49,7 +49,7 @@ io.on('connection', function (socket) {
                 {$project: {name: { $toLower: "$name" }}},
                 {$match:{name:username}}
             ], function(err, user){
-                socket.emit('checkUsernameBack', user[0]!=undefined);
+                socket.emit('checkUsernameBack', (user.length>0 && user[0]!=undefined));
             });
         }else{
             socket.emit('checkUsernameBack', false);
