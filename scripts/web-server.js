@@ -7,6 +7,8 @@ var app = express();
 var mongoose = require('mongoose');
 var rootPath = path.normalize(__dirname + '/../');
 var bodyParser = require('body-parser');
+var userModule = require('./modules/users.js');
+var tripModule = require('./modules/trips.js');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -24,57 +26,27 @@ var io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     console.log("connection done");
+
+    // user calls
     socket.on('logInUser', function(data) {
-       console.log('logInUser: ' + data);
-       User.find({name:data.name, password:data.password},function(err, user){
-            console.log("the user logged is  "+user);
-            if(err) throw err;
-            socket.emit('logInUserBack', user[0]);
-       });
+        userModule.logInUser(data, socket);
     });
     socket.on('checkEmail', function(data) {
-        console.log('checkEmail: ' + data);
-        User.find({email:data.email},function(err, user){
-            console.log("the email already exists "+user);
-            if(err) throw err;
-            socket.emit('checkEmailBack', user[0]!=undefined);
-        });
+        userModule.checkEmail(data, socket);
     });
-
     socket.on('checkUsername', function(username) {
-
-        if(username!= undefined){
-            username = username.toLowerCase();
-            User.aggregate([
-                {$project: {name: { $toLower: "$name" }}},
-                {$match:{name:username}}
-            ], function(err, user){
-                socket.emit('checkUsernameBack', (user.length>0 && user[0]!=undefined));
-            });
-        }else{
-            socket.emit('checkUsernameBack', false);
-        }
+        userModule.checkUsername(username, socket);
     });
     socket.on('registerUser', function(data) {
-        console.log(data);
-        var newUser = new User({
-            name:data.name,
-            email:data.email,
-            password:data.password
-        });
-        newUser.save(function(err, user){
-            var saved = false;
-            if(err){
-                console.log("User not saved "+user);
-                socket.emit('registerUserBack', false);
-                throw err;
-            }else{
-                saved = true;
-                console.log("User saved "+user);
-            }
-            socket.emit('registerUserBack', saved);
-        });
+        userModule.registerUser(data, socket);
     });
+
+    // trips calls
+    socket.on('loadCityDefaultOptions', function() {
+        tripModule.getCityDefOptions(socket);
+    });
+
+
 });
 var db = mongoose.connection;
 db.on('error', console.error);
@@ -83,14 +55,7 @@ db.once('open', function() {
 });
 mongoose.connect('mongodb://alex:Mdeveloper-3@ds051833.mongolab.com:51833/mysuitcase');
 
-var Schema = require('mongoose').Schema;
-
-var User = new Schema({
-    name        :   String,
-    email   :   String,
-    password        :   String
-});
-User = db.model('User', User);
+userModule.createUserModel(db);
 
 server.listen(8000);
 console.log('Listening on port ' + 8000 + '...');
