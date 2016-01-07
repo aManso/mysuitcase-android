@@ -18,7 +18,8 @@ suitcaseApp.service('storageService', function($cookieStore){
     };
 
     this.getInfoLS = function(id) {
-        return JSON.parse(localStorage[id]);
+        if(localStorage[id]) return JSON.parse(localStorage[id]);
+        return undefined;
     };
 
     this.removeInfoLS = function(id) {
