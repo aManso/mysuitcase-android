@@ -3,13 +3,13 @@
  */
 'use strict';
 
-suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, cookieService, commonFunctionsService){
+suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, storageService, commonFunctionsService){
     $log.info('starting mainCtrl');
     var socket = io.connect("http://localhost:8000");
     $scope.login = {};
 
     $scope.toggleRemindInput = false;
-    $scope.user = cookieService.getCookie('user');
+    $scope.user = storageService.getInfoLS('user');
 
 //    login/logout *******************************************************************************************
     $scope.isLogIn = function(){
@@ -18,7 +18,7 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, co
 
     $scope.logOut = function(){
         $scope.user = undefined;
-        cookieService.removeCookie('user');
+        storageService.removeInfoLS('user');
         goToTop();
     }
     $scope.logInUser = function(loginForm) {
@@ -35,7 +35,7 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, co
                 $log.info('Bienvenido '+userDB.name);
                 $scope.user = userDB;
                 cleanLogInFields();
-                cookieService.setCookie('user',{'login': true, id:userDB.id, name:userDB.name});
+                storageService.setInfoLS('user',{'login': true, id:userDB.id, name:userDB.name});
                 $scope.login.wrongUserPass = false;
                 goToTop();
             }else{

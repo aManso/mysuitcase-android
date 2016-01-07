@@ -3,7 +3,7 @@
  */
 'use strict';
 
-suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log, $location, currentTravelService, cookieService){
+suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log, $location, currentTravelService, storageService){
     $log.info('starting chooseOptionsController');
     var PATHS = {makeSuitcase : '/makeSuitcase'};
     var COUNTRIES = {
@@ -56,7 +56,7 @@ suitcaseApp.controller('chooseOptionsController',function chooseOptionsControlle
         if($scope.checkForm(form)){
             $log.info("valid form");
             currentTravelService.setTravelOptions($scope.travel);
-            cookieService.setCookie('travelOptions', $scope.travel);
+            storageService.setInfoLS('travelOptions', $scope.travel);
             $location.path(PATHS.makeSuitcase)
         }
     }
