@@ -12,10 +12,22 @@ var mocha = require('gulp-mocha');
 //    })
 //});
 
+gulp.task('default', function() {
+  var error = false;
+  gulp.
+    src('./test/connectionModuleTest.js').
+    pipe(mocha()).
+    on('error', function(err) {
+      console.log(err);
+      console.log('Tests failed!');
+      error = true;
+    })
+});
+
 gulp.task('test', function() {
   var error = false;
   gulp.
-    src('./test/test.js').
+    src('./test/*.js').
     pipe(mocha()).
     on('error', function(err) {
       console.log(err);

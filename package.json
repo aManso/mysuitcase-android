@@ -36,6 +36,7 @@
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "mocha": "~2.3.4",
+    "mongodb": "^2.2.5",
     "temp": "~0.8.0"
   },
   "licenses": [
