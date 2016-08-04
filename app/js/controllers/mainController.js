@@ -85,7 +85,7 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, st
             password: $scope.register.password
         }
         socket.emit('registerUser',user);
-        socket.on('registerUserBack', function(userDB) {
+        socket.on('registerUserCallback', function(userDB) {
             if (userDB) {
                 console.log('The user has been registered successfully');
                 logIn({name:$scope.register.username, password:$scope.register.password});
@@ -98,14 +98,14 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, st
     }
 
     $scope.register.isValidUser = function(){
-        if($scope.register.username){
-            return $scope.register.username.length>2;
+        if($scope.register.username!==undefined){
+            return $scope.register.username.length>2 && !$scope.register.usernameExists;
         }
     }
 
     $scope.register.checkExistingUsername = function(){
         socket.emit('checkUsername',$scope.register.username);
-        socket.on('checkUsernameBack', function(userDB) {
+        socket.on('checkUsernameCallback', function(userDB) {
             $scope.register.usernameExists = userDB;
         });
     }

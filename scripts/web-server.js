@@ -1,15 +1,19 @@
+//var fs = require('fs');
 var express = require('express');
-var path = require('path');
-var events = require('./eventsController');
-var http = require('http');
-var fs = require('fs');
 var app = express();
-var mongoose = require('mongoose');
-var rootPath = path.normalize(__dirname + '/../');
-var bodyParser = require('body-parser');
+var http = require('http');
+var server = http.createServer(app);
+var io = require('socket.io')(server);
+
+// FILES
+var connection = require("./connection.js");
+var events = require('./eventsController');
 var userModule = require('./modules/users.js');
 var tripModule = require('./modules/trips.js');
 
+var path = require('path');
+var rootPath = path.normalize(__dirname + '/../');
+var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static( rootPath + '/app'));
@@ -19,14 +23,9 @@ app.use(express.static( rootPath + '/app'));
 //app.post('/data/event/:id', events.save);
 //app.get('*', function(req, res) { res.sendFile(rootPath + '/app/index.html'); });
 
-
-
-var server = http.createServer(app);
-var io = require('socket.io')(server);
-
 io.on('connection', function (socket) {
     console.log("connection done");
-
+    userModule.createUserModel();
     // user calls
     socket.on('logInUser', function(data) {
         userModule.logInUser(data, socket);
@@ -42,20 +41,13 @@ io.on('connection', function (socket) {
     });
 
     // trips calls
-    socket.on('loadCityDefaultOptions', function() {
-        tripModule.getCityDefOptions(socket);
-    });
-
-
+//    userModule.createCityModel();
+//    socket.on('loadCityDefaultOptions', function(city) {
+//        console.log(city);
+//        tripModule.getCityDefOptions(city);
+//    });
 });
-var db = mongoose.connection;
-db.on('error', console.error);
-db.once('open', function() {
-    console.log('connected with ddbb');
-});
-mongoose.connect('mongodb://alex:Mdeveloper-3@ds051833.mongolab.com:51833/mysuitcase');
 
-userModule.createUserModel(db);
+connection.executeServerConnection(server)
+connection.executeDDBBConnection();
 
-server.listen(8000);
-console.log('Listening on port ' + 8000 + '...');

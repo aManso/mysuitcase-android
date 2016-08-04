@@ -1,8 +1,4 @@
-/**
- * Created by Alex on 04/11/2015.
- */
 'use strict';
-
 var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelService', 'ngCookies'])
     .config(function($stateProvider, $urlRouterProvider){
         //other possible values to redirect

@@ -1,11 +1,7 @@
-/**
- * Created by Alex on 04/11/2015.
- */
-'use strict';
-
-suitcaseApp.controller('chooseOptionsController',function chooseOptionsController($scope, $log, $location, currentTravelService, storageService){
+suitcaseApp.controller('chooseOptionsController',
+    function chooseOptionsController($scope, $log, currentTravelService, storageService, commonFunctionsService){
     $log.info('starting chooseOptionsController');
-    var PATHS = {makeSuitcase : '/makeSuitcase'};
+
     var COUNTRIES = {
         default: 'españa'
     };
@@ -57,7 +53,7 @@ suitcaseApp.controller('chooseOptionsController',function chooseOptionsControlle
             $log.info("valid form");
             currentTravelService.setTravelOptions($scope.travel);
             storageService.setInfoLS('travelOptions', $scope.travel);
-            $location.path(PATHS.makeSuitcase)
+            commonFunctionsService.goTo('makeSuitcase');
         }
     }
     $(function () {

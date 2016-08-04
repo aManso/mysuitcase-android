@@ -217,16 +217,16 @@
                             <div class="row control-group">
                                 <div class="form-group col-xs-12 floating-label-form-group controls">
                                     <label>Nombre de usuario</label>
-                                    <input type="text" class="form-control" placeholder="Nombre de usuario" ng-blur="register.checkExistingUsername()" ng-model="register.username" name="registerUserName" required data-validation-required-message="Please enter your name.">
+                                    <input type="text" class="form-control" placeholder="Nombre de usuario" ng-change="register.checkExistingUsername()" ng-model="register.username" name="registerUserName" required data-validation-required-message="Please enter your name.">
                                     <p class="help-block text-danger"></p>
                                     <div ng-show="registrationForm.registerUserName.$touched">
-                                        <span class="fa fa-5px fa-check iconForm" ng-show="register.isValidUser() && !register.usernameExists"> </span>
-                                        <span class="fa fa-5px fa-close iconForm" ng-show="!register.isValidUser() || register.usernameExists"> </span>
+                                        <span class="fa fa-5px fa-check iconForm" ng-show="$scope.register.username!= undefined && register.isValidUser()"> </span>
+                                        <span class="fa fa-5px fa-close iconForm" ng-show="$scope.register.username=== undefined || !register.isValidUser()"> </span>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="error-message" ng-show="registrationForm.registerUserName.$touched && !register.isValidUser()">El nombre de usuario debe tener al menos 3 caracteres</div>
-                                    <div class="error-message" ng-show="register.usernameExists">El nombre de usuario ya existe</div>
+                                    <div class="error-message" ng-show="registrationForm.registerUserName.$touched && register.username.length<3">El nombre de usuario debe tener al menos 3 caracteres</div>
+                                    <div class="error-message" ng-show="$scope.register.username!= undefined && !register.isValidUser()">El nombre de usuario ya existe</div>
                                 </div>
                             </div>
                             <div class="row control-group">

@@ -3,15 +3,16 @@
   "version": "0.4.1",
   "description": "To make lists of things to pack in your travels",
   "main": "app/index.html",
-  "repository": "meanjs/generator-meanjs",
   "author": {
     "name": "Alex"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.2.2"
   },
   "scripts": {
-    "test": "mocha"
+    "mysuitcase": "gulp bost suitcase",
+    "test": "gulp test",
+    "watch": "gulp watch"
   },
   "keywords": [
     "suitcase",
@@ -22,20 +23,19 @@
   ],
   "dependencies": {
     "angular-cookies": "^1.4.7",
-    "bluebird": "~2.10.0",
     "body-parser": "^1.14.1",
     "chalk": "~1.1.1",
     "express": "^4.13.3",
     "jade": "^1.11.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.0.0",
     "mongoose": "^4.2.6",
-    "socket.io": "^1.3.7",
-    "underscore.string": "~3.2.2",
-    "yeoman-generator": "~0.20.3",
-    "yo": "~1.4.8"
+    "socket.io": "^1.3.7"
   },
   "devDependencies": {
-    "mocha": "~2.3.2",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "mocha": "~2.3.4",
     "temp": "~0.8.0"
   },
   "licenses": [

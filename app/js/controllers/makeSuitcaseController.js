@@ -2,7 +2,7 @@
  * Created by alejandromansogonzalez on 13/11/15.
  */
 
-suitcaseApp.controller('makeSuitcaseController',function travelsController($scope, $log, $location, currentTravelService, storageService){
+suitcaseApp.controller('makeSuitcaseController',function travelsController($scope, $log, currentTravelService, storageService, commonFunctionsService){
     $log.info('starting makeSuitcaseController');
     var socket = io.connect("http://localhost:8000");
     var travelOptions = currentTravelService.getTravelOptions();
@@ -12,7 +12,7 @@ suitcaseApp.controller('makeSuitcaseController',function travelsController($scop
         travelOptions = travelOptionsCookies;
     }
     if(!travelOptions){
-        $location.path('chooseOptions')
+        commonFunctionsService.goTo('chooseOptions');
     }else{
         socket.emit('loadCityDefaultOptions');
         socket.on('loadCityDefaultOptionsBack', function(defOptions) {

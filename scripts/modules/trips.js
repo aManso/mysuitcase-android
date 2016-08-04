@@ -1,6 +1,3 @@
-/**
- * Created by alejandromansogonzalez on 31/12/15.
- */
 var Schema = require('mongoose').Schema;
 var City = undefined;
 
@@ -16,11 +13,11 @@ module.exports.createCityModel = function(db){
     City = db.model('City', City);
 }
 
-module.exports.getCityDefOptions = function (socket) {
+module.exports.getCityDefOptions = function (city) {
     console.log('getting city default options: ');
-    City.find({name: defaultOptions}, function (err, user) {
-        console.log("the user logged is  " + user);
+    City.find({name: city}, function (err, result) {
+        console.log("the user logged is  " + result);
         if (err) throw err;
-        socket.emit('logInUserBack', user[0]);
+        socket.emit('defCityOptBack', result[0]);
     });
 }
