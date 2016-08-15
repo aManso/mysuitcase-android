@@ -30,6 +30,10 @@ module.exports.createUserModel = function(){
     }
 }
 
+module.exports.getUserModel = function(){
+    return UserModel;
+}
+
 module.exports.registerUser = function (data, socket) {
     console.log(data);
     var newUser = new UserModel({
@@ -52,12 +56,16 @@ module.exports.registerUser = function (data, socket) {
 }
 
 module.exports.logInUser = function (data, socket) {
-    console.log('logInUser: ' + data.name);
-    UserModel.find({name: data.name, password: data.password}, function (err, user) {
-        console.log("the user logged is  " + user);
-        if (err) throw err;
-        socket.emit('logInUserBack', user[0]);
-    });
+    if(data.fromFB){
+        console.log('logInUser with FB');
+    }else{
+        console.log('logInUser: ' + data.name);
+        UserModel.find({name: data.name, password: data.password}, function (err, user) {
+            console.log("the user logged is  " + user);
+            if (err) throw err;
+            socket.emit('logInUserBack', user[0]);
+        });
+    }
 }
 
 module.exports.checkEmail = function (data, socket) {

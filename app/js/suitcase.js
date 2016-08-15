@@ -2,7 +2,7 @@
 var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelService', 'ngCookies'])
     .config(function($stateProvider, $urlRouterProvider){
         //other possible values to redirect
-        $urlRouterProvider.when('/admin','/adminarea');
+        $urlRouterProvider.when('/admin','/adminArea');
         $urlRouterProvider.when('/init','/chooseOptions');
         $urlRouterProvider.when('/makesuitcase','/makeSuitcase');
         //default case
@@ -21,9 +21,9 @@ var suitcaseApp = angular.module('suitcaseApp', ['ui.router', 'currentTravelServ
                 templateUrl:'../templates/makeSuitcase.html',
                 controller: 'makeSuitcaseController'
             })
-            .state('adminarea',
+            .state('adminArea',
             {
-                url: "/adminarea",
+                url: "/adminArea    ",
                 templateUrl:'templates/adminArea.html',
                 controller: 'adminAreaController'
             })

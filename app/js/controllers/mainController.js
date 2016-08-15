@@ -1,55 +1,9 @@
-/**
- * Created by Alex on 04/11/2015.
- */
 'use strict';
-
 suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, storageService, commonFunctionsService){
     $log.info('starting mainCtrl');
-    var socket = io.connect("http://localhost:8000");
-    $scope.login = {};
 
     $scope.toggleRemindInput = false;
     $scope.user = storageService.getInfoLS('user');
-
-//    login/logout *******************************************************************************************
-    $scope.isLogIn = function(){
-        return $scope.user != undefined ;
-    }
-
-    $scope.logOut = function(){
-        $scope.user = undefined;
-        storageService.removeInfoLS('user');
-        goToTop();
-    }
-    $scope.logInUser = function(loginForm) {
-        if (loginForm && loginForm.$valid) {
-            logIn({name: loginForm.username.$viewValue, password: loginForm.userPassword.$viewValue});
-        }
-        $scope.remindPassError = false;
-    };
-
-    function logIn(user){
-        socket.emit('logInUser',user);
-        socket.on('logInUserBack', function(userDB) {
-            if(userDB!=undefined){
-                $log.info('Bienvenido '+userDB.name);
-                $scope.user = userDB;
-                cleanLogInFields();
-                storageService.setInfoLS('user',{'login': true, id:userDB.id, name:userDB.name});
-                $scope.login.wrongUserPass = false;
-                goToTop();
-            }else{
-                console.log('El usuario no existe '+userDB);
-                $scope.login.wrongUserPass = true;
-            }
-            $scope.$apply();
-        });
-    }
-
-    function cleanLogInFields(){
-        $scope.login.username = undefined;
-        $scope.login.userPassword = undefined;
-    }
 
 //    remindPass *******************************************************************************************
     $scope.toggleRemind = function() {
@@ -145,21 +99,30 @@ suitcaseApp.controller('mainCtrl', function mainCtrl($scope, $location, $log, st
 
 //****************************************************************************************
 
-    $scope.goAdminArea = function(){
-        $location.path("/adminarea");
+    function logIn(user){
+        socket.emit('logInUser',user);
+        socket.on('logInUserBack', function(userDB) {
+            if(userDB!=undefined){
+                $log.info('Bienvenido '+userDB.name);
+                $scope.user = userDB;
+                cleanLogInFields();
+                storageService.setInfoLS('user',{'login': true, id:userDB.id, name:userDB.name});
+                $scope.login.wrongUserPass = false;
+                goToTop();
+            }else{
+                console.log('El usuario no existe '+userDB);
+                $scope.login.wrongUserPass = true;
+            }
+            $scope.$apply();
+        });
     }
-    switch ($location.path()){
-        case "/chooseOptions" :
-            $scope.topButton = "Hacer maleta";
-            break;
-        case "/adminarea" :
-            topButton : "Admin area";
-            break;
-        default: $scope.topButton = "Hacer maleta";
+
+    function cleanLogInFields(){
+        $scope.login.username = undefined;
+        $scope.login.userPassword = undefined;
     }
-    function goToTop(){
-        $('.navbar-brand')[0].click();
-    }
+
+    //****************************************************************************************
 
     function checkExistingEmail(email, target){
         if(email){

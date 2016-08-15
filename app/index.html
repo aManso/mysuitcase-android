@@ -42,7 +42,7 @@
     <body id="page-top" class="index" ng-controller="mainCtrl">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top" ng-controller="navBarCtrl">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header page-scroll">
@@ -293,6 +293,11 @@
                         <h2>Log In</h2>
                         <hr class="star-primary">
                     </div>
+                </div>
+                <div class="row text-center">
+                    <p>Login with:</p>
+                    <a href="/auth/facebook" class="btn btn-primary btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+                    <p>or:</p>
                 </div>
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
@@ -661,6 +666,7 @@
         <!--controllers-->
         <script src="js/suitcase.js"></script>
         <script src="js/controllers/mainController.js"></script>
+        <script src="js/controllers/navBarController.js"></script>
         <script src="js/controllers/chooseOptionsController.js"></script>
         <script src="js/controllers/adminAreaController.js"></script>
         <script src="js/controllers/travelsController.js"></script>

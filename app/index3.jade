@@ -1,0 +1,478 @@
+doctype html(lang='en', ng-app='suitcaseApp')
+head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='Alex Manso')
+    title My Suitcase
+    // Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='css/freelancer.css', rel='stylesheet')
+    // Custom Fonts
+    link(href='font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Montserrat:400,700', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic', rel='stylesheet', type='text/css')
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+    script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+    script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+    // datetime style file
+    link(rel='stylesheet', href='lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')
+    // cusmtom css
+    link(rel='stylesheet', href='css/main.css')
+    link(rel='stylesheet', href='css/navbar.css')
+    link(rel='stylesheet', href='css/chooseOptions.css')
+html
+    body#page-top.index(ng-controller='mainCtrl')
+        // Navigation
+        include templates/partials/navBar
+
+        // Header
+        header
+            .container
+                .parent-content(ui-view='')
+
+        // My travels Grid Section
+        section#travels(ng-if='isLogIn()')
+            .container
+                .row
+                    .col-lg-12.text-center
+                        h2 Portfolio
+                        hr.star-primary
+                .row
+                    .col-sm-4.portfolio-item
+                        a.portfolio-link(href='#portfolioModal1', data-toggle='modal')
+                            .caption
+                                .caption-content
+                                    i.fa.fa-search-plus.fa-3x
+                            img.img-responsive(src='img/portfolio/cabin.png', alt='')
+                    .col-sm-4.portfolio-item
+                        a.portfolio-link(href='#portfolioModal2', data-toggle='modal')
+                            .caption
+                                .caption-content
+                                    i.fa.fa-search-plus.fa-3x
+                            img.img-responsive(src='img/portfolio/cake.png', alt='')
+                    .col-sm-4.portfolio-item
+                        a.portfolio-link(href='#portfolioModal3', data-toggle='modal')
+                            .caption
+                                .caption-content
+                                    i.fa.fa-search-plus.fa-3x
+                            img.img-responsive(src='img/portfolio/circus.png', alt='')
+                    .col-sm-4.portfolio-item
+                        a.portfolio-link(href='#portfolioModal4', data-toggle='modal')
+                            .caption
+                                .caption-content
+                                    i.fa.fa-search-plus.fa-3x
+                            img.img-responsive(src='img/portfolio/game.png', alt='')
+                    .col-sm-4.portfolio-item
+                        a.portfolio-link(href='#portfolioModal5', data-toggle='modal')
+                            .caption
+                                .caption-content
+                                    i.fa.fa-search-plus.fa-3x
+                            img.img-responsive(src='img/portfolio/safe.png', alt='')
+                    .col-sm-4.portfolio-item
+                        a.portfolio-link(href='#portfolioModal6', data-toggle='modal')
+                            .caption
+                                .caption-content
+                                    i.fa.fa-search-plus.fa-3x
+                            img.img-responsive(src='img/portfolio/submarine.png', alt='')
+
+        // About Section
+        section#about.success
+            .container
+                .row
+                    .col-lg-12.text-center
+                        h2 Sobre mimaleta.com
+                        hr.star-light
+                .row
+                    .col-lg-4.col-lg-offset-2
+                        p
+                            | Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.
+                    .col-lg-4
+                        p
+                            | Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!
+                    .col-lg-8.col-lg-offset-2.text-center
+                        a.btn.btn-lg.btn-outline(href='#')
+                            i.fa.fa-download
+                            |  Download Theme
+        // registration Section
+        section#registration(ng-if='!isLogIn()')
+            .container
+                .row
+                    .col-lg-12.text-center
+                        h2 Registro
+                        hr.star-primary
+                .row
+                    .col-lg-8.col-lg-offset-2
+                        // To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.
+                        // The form should work on most web servers, but if the form is not working you may need to configure your web server differently.
+                        ng-form#registrationForm(name='registrationForm', novalidate='')
+                            .row.control-group
+                                .form-group.col-xs-12.floating-label-form-group.controls
+                                    label Nombre de usuario
+                                    input.form-control(type='text', placeholder='Nombre de usuario', ng-change='register.checkExistingUsername()', ng-model='register.username', name='registerUserName', required='', data-validation-required-message='Please enter your name.')
+                                    p.help-block.text-danger
+                                    div(ng-show='registrationForm.registerUserName.$touched')
+                                        span.fa.fa-5px.fa-check.iconForm(ng-show='$scope.register.username!= undefined && register.isValidUser()')
+                                        span.fa.fa-5px.fa-close.iconForm(ng-show='$scope.register.username=== undefined || !register.isValidUser()')
+                                div
+                                    .error-message(ng-show='registrationForm.registerUserName.$touched && register.username.length<3') El nombre de usuario debe tener al menos 3 caracteres
+                                    .error-message(ng-show='$scope.register.username!= undefined && !register.isValidUser()') El nombre de usuario ya existe
+                            .row.control-group
+                                .form-group.col-xs-12.floating-label-form-group.controls
+                                    label Email
+                                    input.form-control(type='email', placeholder='Email', ng-blur='register.checkExistingEmail()', ng-model='register.email', name='userEmail', required='', data-validation-required-message='Please enter your email address.')
+                                    p.help-block.text-danger
+                                    div(ng-show='registrationForm.userEmail.$touched')
+                                        span.fa.fa-5px.fa-check.iconForm(ng-show='registrationForm.userEmail.$valid && !register.emailExists')
+                                        span.fa.fa-5px.fa-close.iconForm(ng-show='registrationForm.userEmail.$invalid || register.emailExists')
+                                div
+                                    .error-message(ng-show='registrationForm.userEmail.$touched && registrationForm.userEmail.$invalid') El email introducido no es válido
+                                    .error-message(ng-show='register.emailExists') El email introducido ya existe
+                            .row.control-group
+                                .form-group.col-xs-12.floating-label-form-group.controls
+                                    label Contraseña
+                                    input.form-control(type='password', placeholder='Contraseña', ng-model='register.password', name='userPassword', required='', data-validation-required-message='Please enter your phone number.')
+                                    p.help-block.text-danger
+                                    div(ng-show='registrationForm.userPassword.$touched')
+                                        span.fa.fa-5px.fa-check.iconForm(ng-show='register.isValidPass()')
+                                        span.fa.fa-5px.fa-close.iconForm(ng-show='!register.isValidPass()')
+                                div
+                                    .error-message(ng-show='registrationForm.userPassword.$touched && !register.isValidPass()') La contraseña debe tener al menos una letra, un número y un carácter especial
+                            .row.control-group
+                                .form-group.col-xs-12.floating-label-form-group.controls
+                                    label Repite la contraseña
+                                    input.form-control(type='password', placeholder='Repite la contraseña', ng-model='register.repeatPassword', name='repeatUserPassword', required='', data-validation-required-message='Please enter your phone number.')
+                                    p.help-block.text-danger
+                                    div(ng-show='registrationForm.repeatUserPassword.$touched')
+                                        span.fa.fa-5px.fa-check.iconForm(ng-show='register.password === register.repeatPassword')
+                                        span.fa.fa-5px.fa-close.iconForm(ng-show='register.password != register.repeatPassword')
+                                div
+                                    .error-message(ng-show='registrationForm.repeatUserPassword.$touched && register.password != register.repeatPassword') Ambas contraseñas no coinciden
+                            br
+                            #success
+                            .row
+                                .form-group.col-xs-12
+                                    button.btn.btn-success.btn-lg(type='submit', ng-disabled='!register.isValidForm(registrationForm)', ng-click='register.register(registrationForm)') Registrar
+        // log in section
+        section#logIn(ng-if='!isLogIn()')
+            .container
+                .row
+                    .col-lg-12.text-center
+                        h2 Log In
+                        hr.star-primary
+                .row
+                    .col-lg-8.col-lg-offset-2
+                        // To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.
+                        // The form should work on most web servers, but if the form is not working you may need to configure your web server differently.
+                        form#loginForm(name='loginForm', novalidate='')
+                            .row.control-group
+                                .form-group.col-xs-12.floating-label-form-group.controls
+                                    label Nombre de usuario
+                                    input.form-control(type='text', placeholder='Nombre usuario', name='username', ng-model='login.username', ng-change='login.wrongUserPass=false', required='', data-validation-required-message='Please enter your name.')
+                                    p.help-block.text-danger
+                            .row.control-group
+                                .form-group.col-xs-12.floating-label-form-group.controls
+                                    label Contraseña
+                                    input.form-control(type='password', placeholder='Contraseña', name='userPassword', ng-model='login.password', ng-change='login.wrongUserPass=false', required='', data-validation-required-message='Please enter your phone number.')
+                                    p.help-block.text-danger
+                            br
+                            .row.control-group.remindPass.floating-label-form-group
+                                span.form-group.col-lg-6.col-sm-6.col-xs-12(ng-click='toggleRemind()') ¿Te has olvidado de tu contraseña?
+                                input.form-group.col-lg-6.col-sm-6.col-xs-12(ng-show='toggleRemindInput', ng-change='remindPassError=false', ng-model='remindPassEmail', type='email', placeholder='Introduce tu email')
+                            br
+                            div(ng-show='loginForm.$submitted && (login.wrongUserPass || (loginForm.$invalid && (loginForm.userPassword.$touched || loginForm.username.$touched)))')
+                                span.error-message(ng-show='login.wrongUserPass') El usuario o la contraseña son erroneas
+                                span.error-message(ng-show='loginForm.$invalid && (loginForm.userPassword.$touched || loginForm.username.$touched)') Debes introducir usuario y contraseña
+                            div(ng-show='remindPassError')
+                                span.error-message(ng-show='remindPassError') El email que has introducido no está registrado
+                            br
+                            #success
+                            .row
+                                .form-group.col-xs-12
+                                    button.btn.btn-success.btn-lg(type='submit', ng-show='!toggleRemindInput', ng-click='logInUser(loginForm)') Acceder
+                                    button.btn.btn-success.btn-lg(type='submit', ng-show='toggleRemindInput', ng-click='remindPass()') Recordar contraseña
+        // Footer
+        footer.text-center
+            .footer-above
+                .container
+                    .row
+                        .footer-col.col-md-4
+                            h3 Location
+                            p
+                                | 3481 Melrose Place
+                                br
+                                | Beverly Hills, CA 90210
+                        .footer-col.col-md-4
+                            h3 Around the Web
+                            ul.list-inline
+                                li
+                                    a.btn-social.btn-outline(href='#')
+                                        i.fa.fa-fw.fa-facebook
+                                li
+                                    a.btn-social.btn-outline(href='#')
+                                        i.fa.fa-fw.fa-google-plus
+                                li
+                                    a.btn-social.btn-outline(href='#')
+                                        i.fa.fa-fw.fa-twitter
+                                li
+                                    a.btn-social.btn-outline(href='#')
+                                        i.fa.fa-fw.fa-linkedin
+                                li
+                                    a.btn-social.btn-outline(href='#')
+                                        i.fa.fa-fw.fa-dribbble
+                        .footer-col.col-md-4
+                            h3 About Freelancer
+                            p
+                                | Freelance is a free to use, open source Bootstrap theme created by
+                                a(href='http://startbootstrap.com') Start Bootstrap
+                                | .
+            .footer-below
+                .container
+                    .row
+                        .col-lg-12
+                            | Copyright © Your Website 2014
+        // Scroll to Top Button (Only visible on small and extra-small screen sizes)
+        .scroll-top.page-scroll.visible-xs.visible-sm
+            a.btn.btn-primary(href='#page-top')
+                i.fa.fa-chevron-up
+        // Portfolio Modals
+        #portfolioModal1.portfolio-modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+            .modal-content
+                .close-modal(data-dismiss='modal')
+                    .lr
+                        .rl
+                .container
+                    .row
+                        .col-lg-8.col-lg-offset-2
+                            .modal-body
+                                h2 Project Title
+                                hr.star-primary
+                                img.img-responsive.img-centered(src='img/portfolio/cabin.png', alt='')
+                                p
+                                    | Use this area of the page to describe your project. The icon above is part of a free icon set by
+                                    a(href='https://sellfy.com/p/8Q9P/jV3VZ/') Flat Icons
+                                    | . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!
+                                ul.list-inline.item-details
+                                    li
+                                        | Client:
+                                        strong
+                                            a(href='http://startbootstrap.com') Start Bootstrap
+                                    li
+                                        | Date:
+                                        strong
+                                            a(href='http://startbootstrap.com') April 2014
+                                    li
+                                        | Service:
+                                        strong
+                                            a(href='http://startbootstrap.com') Web Development
+                                button.btn.btn-default(type='button', data-dismiss='modal')
+                                    i.fa.fa-times
+                                    |  Close
+        #portfolioModal2.portfolio-modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+            .modal-content
+                .close-modal(data-dismiss='modal')
+                    .lr
+                        .rl
+                .container
+                    .row
+                        .col-lg-8.col-lg-offset-2
+                            .modal-body
+                                h2 Project Title
+                                hr.star-primary
+                                img.img-responsive.img-centered(src='img/portfolio/cake.png', alt='')
+                                p
+                                    | Use this area of the page to describe your project. The icon above is part of a free icon set by
+                                    a(href='https://sellfy.com/p/8Q9P/jV3VZ/') Flat Icons
+                                    | . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!
+                                ul.list-inline.item-details
+                                    li
+                                        | Client:
+                                        strong
+                                            a(href='http://startbootstrap.com') Start Bootstrap
+                                    li
+                                        | Date:
+                                        strong
+                                            a(href='http://startbootstrap.com') April 2014
+                                    li
+                                        | Service:
+                                        strong
+                                            a(href='http://startbootstrap.com') Web Development
+                                button.btn.btn-default(type='button', data-dismiss='modal')
+                                    i.fa.fa-times
+                                    |  Close
+        #portfolioModal3.portfolio-modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+            .modal-content
+                .close-modal(data-dismiss='modal')
+                    .lr
+                        .rl
+                .container
+                    .row
+                        .col-lg-8.col-lg-offset-2
+                            .modal-body
+                                h2 Project Title
+                                hr.star-primary
+                                img.img-responsive.img-centered(src='img/portfolio/circus.png', alt='')
+                                p
+                                    | Use this area of the page to describe your project. The icon above is part of a free icon set by
+                                    a(href='https://sellfy.com/p/8Q9P/jV3VZ/') Flat Icons
+                                    | . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!
+                                ul.list-inline.item-details
+                                    li
+                                        | Client:
+                                        strong
+                                            a(href='http://startbootstrap.com') Start Bootstrap
+                                    li
+                                        | Date:
+                                        strong
+                                            a(href='http://startbootstrap.com') April 2014
+                                    li
+                                        | Service:
+                                        strong
+                                            a(href='http://startbootstrap.com') Web Development
+                                button.btn.btn-default(type='button', data-dismiss='modal')
+                                    i.fa.fa-times
+                                    |  Close
+        #portfolioModal4.portfolio-modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+            .modal-content
+                .close-modal(data-dismiss='modal')
+                    .lr
+                        .rl
+                .container
+                    .row
+                        .col-lg-8.col-lg-offset-2
+                            .modal-body
+                                h2 Project Title
+                                hr.star-primary
+                                img.img-responsive.img-centered(src='img/portfolio/game.png', alt='')
+                                p
+                                    | Use this area of the page to describe your project. The icon above is part of a free icon set by
+                                    a(href='https://sellfy.com/p/8Q9P/jV3VZ/') Flat Icons
+                                    | . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!
+                                ul.list-inline.item-details
+                                    li
+                                        | Client:
+                                        strong
+                                            a(href='http://startbootstrap.com') Start Bootstrap
+                                    li
+                                        | Date:
+                                        strong
+                                            a(href='http://startbootstrap.com') April 2014
+                                    li
+                                        | Service:
+                                        strong
+                                            a(href='http://startbootstrap.com') Web Development
+                                button.btn.btn-default(type='button', data-dismiss='modal')
+                                    i.fa.fa-times
+                                    |  Close
+        #portfolioModal5.portfolio-modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+            .modal-content
+                .close-modal(data-dismiss='modal')
+                    .lr
+                        .rl
+                .container
+                    .row
+                        .col-lg-8.col-lg-offset-2
+                            .modal-body
+                                h2 Project Title
+                                hr.star-primary
+                                img.img-responsive.img-centered(src='img/portfolio/safe.png', alt='')
+                                p
+                                    | Use this area of the page to describe your project. The icon above is part of a free icon set by
+                                    a(href='https://sellfy.com/p/8Q9P/jV3VZ/') Flat Icons
+                                    | . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!
+                                ul.list-inline.item-details
+                                    li
+                                        | Client:
+                                        strong
+                                            a(href='http://startbootstrap.com') Start Bootstrap
+                                    li
+                                        | Date:
+                                        strong
+                                            a(href='http://startbootstrap.com') April 2014
+                                    li
+                                        | Service:
+                                        strong
+                                            a(href='http://startbootstrap.com') Web Development
+                                button.btn.btn-default(type='button', data-dismiss='modal')
+                                    i.fa.fa-times
+                                    |  Close
+        #portfolioModal6.portfolio-modal.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
+            .modal-content
+                .close-modal(data-dismiss='modal')
+                    .lr
+                        .rl
+                .container
+                    .row
+                        .col-lg-8.col-lg-offset-2
+                            .modal-body
+                                h2 Project Title
+                                hr.star-primary
+                                img.img-responsive.img-centered(src='img/portfolio/submarine.png', alt='')
+                                p
+                                    | Use this area of the page to describe your project. The icon above is part of a free icon set by
+                                    a(href='https://sellfy.com/p/8Q9P/jV3VZ/') Flat Icons
+                                    | . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!
+                                ul.list-inline.item-details
+                                    li
+                                        | Client:
+                                        strong
+                                            a(href='http://startbootstrap.com') Start Bootstrap
+                                    li
+                                        | Date:
+                                        strong
+                                            a(href='http://startbootstrap.com') April 2014
+                                    li
+                                        | Service:
+                                        strong
+                                            a(href='http://startbootstrap.com') Web Development
+                                button.btn.btn-default(type='button', data-dismiss='modal')
+                                    i.fa.fa-times
+                                    |  Close
+
+        // jQuery
+        script(src='lib/jquery/dist/jquery.min.js')
+        // moment
+        script(type='text/javascript', src='lib/moment/min/moment.min.js')
+        // Bootstrap Core JavaScript
+        script(src='lib/bootstrap/dist/js/bootstrap.min.js')
+        // datetime
+        script(type='text/javascript', src='lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
+        // geocomplete
+        script(src='http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places')
+        script(src='lib/geocomplete/jquery.geocomplete.js')
+        // Plugin JavaScript
+        script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js')
+        script(src='js/theme/classie.js')
+        script(src='js/theme/cbpAnimatedHeader.js')
+        // Contact Form JavaScript
+        script(src='js/theme/jqBootstrapValidation.js')
+        script(src='js/theme/contact_me.js')
+        // Custom Theme JavaScript
+        script(src='js/theme/freelancer.js')
+        // <script src="/lib/jquery/dist/jquery.min.js"></script>
+        // angular
+        script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js')
+        script(src='lib/angular-resource/angular-resource.min.js')
+        script(src='lib/angular-ui-router/release/angular-ui-router.min.js')
+        script(src='lib/angular-cookies/angular-cookies.js')
+        // libraries
+        script(src='lib/underscore/underscore-min.js')
+        script(src='https://cdn.socket.io/socket.io-1.0.0.js')
+        // <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        // controllers
+        script(src='./js/suitcase.js')
+        script(src='./js/controllers/mainController.js')
+        script(src='./js/controllers/navBarController.js')
+        script(src='./js/controllers/chooseOptionsController.js')
+        script(src='js/controllers/adminAreaController.js')
+        script(src='js/controllers/travelsController.js')
+        script(src='js/controllers/makeSuitcaseController.js')
+        // services
+        script(src='./js/services/currentTravelService.js')
+        script(src='./js/services/cacheService.js')
+        script(src='./js/services/storageService.js')
+        script(src='./js/services/commonFunctionsService.js')

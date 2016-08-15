@@ -23,10 +23,13 @@ app.use(express.static( rootPath + '/app'));
 //app.post('/data/event/:id', events.save);
 //app.get('*', function(req, res) { res.sendFile(rootPath + '/app/index.html'); });
 
+app.get('/auth/facebook/callback', function(){console.log(2332432);})
+
 io.on('connection', function (socket) {
     console.log("connection done");
     userModule.createUserModel();
     // user calls
+    require('./config/auth.js')(app);
     socket.on('logInUser', function(data) {
         userModule.logInUser(data, socket);
     });
