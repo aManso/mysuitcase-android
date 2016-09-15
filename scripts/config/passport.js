@@ -1,84 +1,108 @@
-// config/passport.js
+var configuration = require('./config.json');
+var userModule = require("../modules/users.js");
+var connectionModule = require("../connection.js");
+var UserModel = userModule.getUserModel();
+var userLogged = undefined
 
-// load all the things we need
-var LocalStrategy    = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+function setupFBStrategy(app) {
+    var passport = require('passport');
+    var FacebookStrategy = require('passport-facebook').Strategy;
 
-// load up the user model
-var User  = require('../modules/users').getUserModel();
-
-// load the auth variables
-var configAuth = require('./auth');
-
-module.exports = function(passport) {
-
-    // used to serialize the user for the session
+    // High level serialize/de-serialize configuration for passport
     passport.serializeUser(function(user, done) {
-        done(null, user.id);
+        console.log("serializando"+user);
+        done(null, user._id);
     });
 
-    // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
-            done(err, user);
-        });
+        console.log("desserializando user with id: "+id);
+        done(null, userLogged);
+
     });
 
-    // code for login (use('local-login', new LocalStategy))
-    // code for signup (use('local-signup', new LocalStategy))
-
-    // =========================================================================
-    // FACEBOOK ================================================================
-    // =========================================================================
-    passport.use(new FacebookStrategy({
-
-            // pull in our app id and secret from our auth.js file
-            clientID        : configAuth.facebookAuth.clientID,
-            clientSecret    : configAuth.facebookAuth.clientSecret,
-            callbackURL     : configAuth.facebookAuth.callbackURL
-
+    // Facebook-specific
+    passport.use(new FacebookStrategy(
+        {
+            clientID: configuration.facebookAuth.facebook_api_key,
+            clientSecret: configuration.facebookAuth.facebook_api_secret,
+            callbackURL: configuration.facebookAuth.callback_url,
+            // Necessary for new version of Facebookcallback_url graph API
+            profileFields: ['id', 'emails', 'name', 'gender']
         },
+        function(accessToken, refreshToken, profile, done) {
+            if (!profile.emails || !profile.emails.length) {
+                return done('No emails associated with this account!');
+            }
 
-        // facebook will send back the token and profile
-        function(token, refreshToken, profile, done) {
+            // console.log(JSON.stringify(profile));
 
-            // asynchronous
-            process.nextTick(function() {
 
-                // find the user in the database based on their facebook id
-                User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
-
-                    // if there is an error, stop everything and return that
-                    // ie an error connecting to the database
-                    if (err)
-                        return done(err);
-
-                    // if the user is found, then log them in
-                    if (user) {
-                        return done(null, user); // user found, return that user
-                    } else {
-                        // if there is no user found with that facebook id, create them
-                        var newUser            = new User();
-
-                        // set all of the facebook information in our user model
-                        newUser.facebook.id    = profile.id; // set the users facebook id
-                        newUser.facebook.token = token; // we will save the token that facebook provides to the user
-                        newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
-                        newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-
-                        // save our user to the database
-                        newUser.save(function(err) {
-                            if (err)
-                                throw err;
-
-                            // if successful, return the new user
-                            return done(null, newUser);
-                        });
-                    }
-
-                });
+            UserModel.find({email:profile.emails[0].value},function(err, user){
+                if(err) throw err;
+                var data = {
+                    name : profile.name.givenName,
+                    email : profile.emails[0].value,
+                    password : profile.id,
+                    isFB : true,
+                    gender: profile.gender,
+                    picture : "http://graph.facebook.com/" + profile.id.toString() + '/picture?type=large'
+                }
+                console.log(JSON.stringify(user));
+                if(user[0]!=undefined){
+                    console.log("existed user");
+                    userLogged = user[0];
+                    done(err, user[0]);
+                }else{
+                    var newUser = new UserModel({
+                        name: data.name,
+                        email: data.email,
+                        gender:data.gender,
+                        password: data.password,
+                        isFB: data.isFB,
+                        picture: data.picture
+                    });
+                    console.log("Registering new user with data: "+JSON.stringify(newUser));
+                    newUser.save(function(err, user){
+                        var saved = false;
+                        if(err){
+                            console.log("User not saved "+user);
+                            throw err;
+                        }else{
+                            saved = true;
+                            console.log("User saved "+user);
+                            userLogged = user;
+                            done(err, user);
+                        }
+                    });
+                }
             });
-
         }));
 
-};
+    // Express middlewares
+    app.use(require('express-session')({
+        secret: 'this is a secret',
+        proxy: true,
+        resave: true,
+        saveUninitialized: true
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    // Express routes for auth
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/facebookLogged',
+            failureRedirect: '/'
+        })
+    );
+
+    app.get('/facebookLogged', function(req, res) {
+        console.log("Log in with facebook has been successful");
+        connectionModule.getSocket().emit('logInUserBack', userLogged);
+    });
+
+}
+
+module.exports = setupFBStrategy;

@@ -23,24 +23,23 @@ app.use(express.static( rootPath + '/app'));
 //app.post('/data/event/:id', events.save);
 //app.get('*', function(req, res) { res.sendFile(rootPath + '/app/index.html'); });
 
-app.get('/auth/facebook/callback', function(){console.log(2332432);})
-
 io.on('connection', function (socket) {
     console.log("connection done");
+    connection.setSocket(socket);
     userModule.createUserModel();
     // user calls
-    require('./config/auth.js')(app);
+    require('./config/passport.js')(app);
     socket.on('logInUser', function(data) {
-        userModule.logInUser(data, socket);
+        userModule.logInUser(data);
     });
     socket.on('checkEmail', function(data) {
-        userModule.checkEmail(data, socket);
+        userModule.checkEmail(data);
     });
     socket.on('checkUsername', function(username) {
-        userModule.checkUsername(username, socket);
+        userModule.checkUsername(username);
     });
     socket.on('registerUser', function(data) {
-        userModule.registerUser(data, socket);
+        userModule.registerUser(data);
     });
 
     // trips calls

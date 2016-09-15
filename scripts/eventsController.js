@@ -20,7 +20,7 @@ module.exports.getAll = function(req, res) {
         files = fs.readdirSync(path);
     }
     catch (e) {
-        console.log(e)
+        console.log("sad"+e)
         res.send('[]');
         res.end();
     }

@@ -1,0 +1,83 @@
+<section id="registration"  ng-if="!isLogIn()">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Registro</h2>
+                <hr class="star-primary">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                <ng-form name="forms.registrationForm" id="registrationForm" novalidate>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Nombre de usuario</label>
+                            <input type="text" class="form-control" placeholder="Nombre de usuario" ng-change="register.checkExistingUsername()" ng-model="register.username" name="registerUserName" required data-validation-required-message="Please enter your name.">
+                            <p class="help-block text-danger"></p>
+                            <div ng-show="forms.registrationForm.registerUserName.$touched">
+                                <span class="fa fa-5px fa-check iconForm" ng-show="$scope.register.username!= undefined && register.isValidUser()"> </span>
+                                <span class="fa fa-5px fa-close iconForm" ng-show="$scope.register.username=== undefined || !register.isValidUser()"> </span>
+                            </div>
+                        </div>
+                        <div ng-show="forms.registrationForm.registerUserName.$touched">
+                            <div class="error-message" ng-show="!isLongEnoughField(register.username,3)">El nombre de usuario debe tener al menos 3 caracteres</div>
+                            <div class="error-message" ng-show="!register.isValidUser() && register.usernameExists">El nombre de usuario ya existe</div>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Email</label>
+                            <input type="email" class="form-control" placeholder="Email" ng-blur="register.checkExistingEmail(forms.registrationForm.registerUserEmail)" ng-model="register.email" name="registerUserEmail" required>
+                            <p class="help-block text-danger"></p>
+                            <div ng-show="forms.registrationForm.registerUserEmail.$touched">
+                                <span class="fa fa-5px fa-check iconForm" ng-show="forms.registrationForm.registerUserEmail.$valid && !register.emailExists"> </span>
+                                <span class="fa fa-5px fa-close iconForm" ng-show="forms.registrationForm.registerUserEmail.$invalid || register.emailExists"> </span>
+                            </div>
+                        </div>
+                        <div ng-show="forms.registrationForm.registerUserEmail.$touched">
+                            <div class="error-message" ng-show="forms.registrationForm.registerUserEmail.$invalid">El email introducido no es válido</div>
+                            <div class="error-message" ng-show="register.emailExists">El email introducido ya existe</div>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" placeholder="Contraseña" ng-model="register.password" name="userPassword" required>
+                            <p class="help-block text-danger"></p>
+                            <div ng-show="forms.registrationForm.userPassword.$touched">
+                                <span class="fa fa-5px fa-check iconForm" ng-show="register.isValidPass()"> </span>
+                                <span class="fa fa-5px fa-close iconForm" ng-show="!register.isValidPass()"> </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="error-message" ng-show="forms.registrationForm.userPassword.$touched && !register.isValidPass()">La contraseña debe tener al menos una letra, un número y un carácter especial</div>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Repite la contraseña</label>
+                            <input type="password" class="form-control" placeholder="Repite la contraseña" ng-model="register.repeatPassword" name="repeatUserPassword" required data-validation-required-message="Please enter your phone number.">
+                            <p class="help-block text-danger"></p>
+                            <div ng-show="forms.registrationForm.repeatUserPassword.$touched">
+                                <span class="fa fa-5px fa-check iconForm" ng-show="register.password === register.repeatPassword"> </span>
+                                <span class="fa fa-5px fa-close iconForm" ng-show="register.password != register.repeatPassword"> </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="error-message" ng-show="forms.registrationForm.repeatUserPassword.$touched && register.password != register.repeatPassword">Ambas contraseñas no coinciden</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button type="submit" ng-disabled="!register.isValidForm(forms.registrationForm)" ng-click="register.register(forms.registrationForm)" class="btn btn-success btn-lg">Registrar</button>
+                        </div>
+                    </div>
+                </ng-form>
+            </div>
+        </div>
+    </div>
+</section>

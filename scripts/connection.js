@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-var db = undefined
+var db = undefined;
+var Socket = undefined;
 
 module.exports.executeDDBBConnection = function(){
     console.log("connecting");
@@ -21,4 +22,11 @@ module.exports.getDDBB = function(){
 module.exports.executeServerConnection = function(server){
     server.listen(8000);
     console.log('Listening on port ' + 8000 + '...');
+}
+
+module.exports.setSocket = function(socket){
+    Socket = socket;
+}
+module.exports.getSocket = function(){
+    return Socket;
 }

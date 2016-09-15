@@ -1,0 +1,60 @@
+<section id="logIn"  ng-if="!isLogIn()">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Log In</h2>
+                <hr class="star-primary">
+            </div>
+        </div>
+        <div class="row text-center">
+            <p>Login with:</p>
+            <a href="/auth/facebook" class="btn btn-primary btn-facebook"><span class="fa fa-facebook"></span> Facebook</a>
+            <p>or:</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+                <form name="forms.loginUserForm" id="loginForm" novalidate>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Nombre de usuario</label>
+                            <input type="text" class="form-control" placeholder="Nombre usuario" name="username" ng-model="login.username" required>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" placeholder="Contraseña" name="userPassword" ng-model="login.password" required data-validation-required-message="Please enter your phone number.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row control-group remindPass floating-label-form-group">
+                        <span class="form-group col-lg-6  col-sm-6 col-xs-12" ng-click="toggleRemind()">¿Te has olvidado de tu contraseña?</span>
+                        <input ng-show="toggleRemindInput" ng-blur="checkRemindEmail(remindUser.email)" ng-model="remindUser.email" class="form-group col-lg-6 col-sm-6 col-xs-12" type="email" placeholder="Introduce tu email"/>
+                    </div>
+                    <br>
+                    <div ng-show="forms.loginUserForm.$submitted && (login.wrongUserPass || (forms.loginUserForm.$invalid && (forms.loginUserForm.userPassword.$touched || forms.loginUserForm.username.$touched)))">
+                        <span ng-show="login.wrongUserPass" class="error-message">El usuario o la contraseña son erroneas</span>
+                        <span ng-show="forms.loginUserForm.$invalid && (forms.loginUserForm.userPassword.$touched || forms.loginUserForm.username.$touched)" class="error-message">Debes introducir usuario y contraseña</span>
+                    </div>
+                    <div ng-show="remindPassError">
+                        <span class="fa fa-5px fa-close iconForm"> </span>
+                        <span ng-show="remindPassError.invalid" class="error-message">El email que has introducido es invalido</span>
+                        <span ng-show="remindPassError.unregistered" class="error-message">El email que has introducido no está registrado</span>
+                    </div>
+                    <br/>
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button type="submit" ng-show="!toggleRemindInput" ng-click="logInUser(forms.loginUserForm)" class="btn btn-success btn-lg">Acceder</button>
+                            <button type="submit" ng-show="toggleRemindInput" ng-click="remindPass()" class="btn btn-success btn-lg">Recordar contraseña</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
